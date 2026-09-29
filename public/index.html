@@ -78,7 +78,8 @@ linear-gradient(180deg,#d7edf6 0%,#e7f4f8 48%,#d5e9f2 100%);position:relative}
 
     #confettiCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
 
-.eq-visual-editor{font-family:Cambria Math, STIX Two Math, Times New Roman, serif;font-size:1.45rem;line-height:1.7;overflow:auto;cursor:text;text-align:left;white-space:normal}.eq-visual-editor:empty:before{content:attr(data-placeholder);color:#a1adb7;font-family:inherit}.eq-visual-editor:focus{outline:0;border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.10)}.eq-frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em}.eq-frac .eq-num{border-bottom:1.5px solid #243b53;padding:0 .18em;min-width:1.1em}.eq-frac .eq-den{padding:0 .18em;min-width:1.1em}.eq-sup{font-size:.7em;vertical-align:super;line-height:0}.eq-sub{font-size:.7em;vertical-align:sub;line-height:0}.eq-root{display:inline-flex;align-items:center;vertical-align:middle}.eq-root .eq-radicand{border-top:1.5px solid #243b53;padding:0 .12em;margin-left:.03em}.eq-func{white-space:nowrap}.eq-slot{display:inline-block;min-width:.45em;border-bottom:1px dotted #789;outline:0}.eq-matrix{display:inline-table;border-collapse:collapse;vertical-align:middle;margin:0 .2em}.eq-matrix td{border:0;padding:0 .28em;text-align:center}.eq-op{font-family:Cambria Math,STIX Two Math,serif}.eq-caret-hint{font-size:.68rem;color:#718496;margin-top:5px}</style>
+.eq-visual-editor{font-family:Cambria Math, STIX Two Math, Times New Roman, serif;font-size:1.45rem;line-height:1.7;overflow:auto;cursor:text;text-align:left;white-space:normal}.eq-visual-editor:empty:before{content:attr(data-placeholder);color:#a1adb7;font-family:inherit}.eq-visual-editor:focus{outline:0;border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.10)}
+math-field.eq-field{display:block;width:100%;min-height:86px;padding:12px 14px;border:2px solid #cbd8e2;border-radius:14px;background:#fff;color:#203e56;font-size:1.45rem;line-height:1.5;box-sizing:border-box;--selection-background-color:rgba(49,83,122,.16);--contains-highlight-background-color:rgba(49,83,122,.10);--smart-fence-color:#31537a} math-field.eq-field:focus-within{border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.10)}.eq-frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em}.eq-frac .eq-num{border-bottom:1.5px solid #243b53;padding:0 .18em;min-width:1.1em}.eq-frac .eq-den{padding:0 .18em;min-width:1.1em}.eq-sup{font-size:.7em;vertical-align:super;line-height:0}.eq-sub{font-size:.7em;vertical-align:sub;line-height:0}.eq-root{display:inline-flex;align-items:center;vertical-align:middle}.eq-root .eq-radicand{border-top:1.5px solid #243b53;padding:0 .12em;margin-left:.03em}.eq-func{white-space:nowrap}.eq-slot{display:inline-block;min-width:.45em;border-bottom:1px dotted #789;outline:0}.eq-matrix{display:inline-table;border-collapse:collapse;vertical-align:middle;margin:0 .2em}.eq-matrix td{border:0;padding:0 .28em;text-align:center}.eq-op{font-family:Cambria Math,STIX Two Math,serif}.eq-caret-hint{font-size:.68rem;color:#718496;margin-top:5px}</style>
 <style>
 #networkPanel{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);display:block}
 #networkPanel h2{margin:0 0 8px;font-size:1.15rem}.net-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.net-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fbfd}.net-box strong{display:block;margin-bottom:8px}.net-row{display:flex;gap:8px;flex-wrap:wrap}.net-row input,.net-row select{flex:1;min-width:120px;padding:10px;border:1px solid var(--line);border-radius:10px}.net-btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;background:var(--navy);color:#fff}.net-btn.alt{background:var(--venecia)}.net-status{margin-top:10px;padding:9px 11px;border-radius:10px;background:#eef7fb;font-weight:700}.net-name{margin-bottom:10px}.net-name label{display:block;font-weight:800;font-size:.78rem;margin-bottom:5px}.net-name input{width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--line);border-radius:10px}.net-start{margin-top:10px;width:100%;display:none}.net-players{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px}.net-player{padding:7px 8px;border-radius:10px;background:#f7fafc;font-size:.72rem;font-weight:800}.net-player small{display:block;color:#708196;font-weight:700;margin-top:2px}.room-code{font-size:1.6rem;letter-spacing:.18em;font-weight:900}.net-hidden{display:none!important}
@@ -190,6 +191,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
+<script src="https://unpkg.com/mathlive@0.108.2/dist/mathlive.min.js"></script>
 </head>
 <body>
 <div class="admin-login-overlay" id="adminLoginOverlay" hidden style="display:none">
@@ -205,8 +207,8 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 <div class="eq-modal" id="eqModal" aria-hidden="true">
   <div class="eq-card">
     <h3>∑ Editor de ecuaciones</h3>
-    <p class="eq-sub">Edita la ecuación directamente. Puedes escribir con el teclado o usar las herramientas; la vista previa muestra exactamente lo que se guardará.</p>
-    <div id="eqField" class="eq-field eq-visual-editor" contenteditable="true" spellcheck="false" role="textbox" aria-label="Editor visual de ecuaciones" data-placeholder="Escribe aquí tu ecuación…"></div>
+    <p class="eq-sub">Edita la ecuación de forma visual, como en Word. Puedes escribir directamente y usar las herramientas matemáticas; no verás código LaTeX.</p>
+    <math-field id="eqField" class="eq-field" virtual-keyboard-mode="manual" smart-mode="false" aria-label="Editor visual de ecuaciones"></math-field>
     <div class="eq-toolbar" id="eqToolbar">
       <button type="button" class="eq-tool" data-eq="frac">a⁄b</button>
       <button type="button" class="eq-tool" data-eq="pow">x²</button>
@@ -222,7 +224,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       <button type="button" class="eq-tool" data-eq="int">∫</button>
     </div>
     <div class="eq-preview" id="eqPreview">Vista previa de la ecuación</div><div class="eq-status" id="eqStatus"></div><div id="eqLatexMirror" style="display:none"></div>
-    <div class="eq-note">Escribe y edita la ecuación visualmente, como en Word. El formato técnico se guarda automáticamente y no se muestra al usuario.</div>
+    <div class="eq-note">El formato técnico se guarda automáticamente; el alumno solo trabaja con la ecuación visual.</div>
     <div class="eq-actions"><button type="button" class="eq-cancel" id="eqCancel">Cancelar</button><button type="button" class="eq-insert" id="eqInsert">Insertar ecuación</button></div>
   </div>
 </div>
@@ -393,50 +395,66 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
     let equationRange=null;
     const eqModal=document.getElementById('eqModal'),eqField=document.getElementById('eqField'),eqPreview=document.getElementById('eqPreview'),eqStatus=document.getElementById('eqStatus'),eqCancel=document.getElementById('eqCancel'),eqInsert=document.getElementById('eqInsert');
     function esc(t){return String(t??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-    function latexToVisual(latex){
-      let x=String(latex||'').trim(); if(!x)return '';
-      x=x.replace(/\\left|\\right/g,'');
-      x=x.replace(/\\begin\{pmatrix\}([\s\S]*?)\\end\{pmatrix\}/g,(_,body)=>{let rows=body.split('\\\\').map(r=>r.split('&'));return '<span class="eq-matrix"><table><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+latexToVisual(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></span>'});
-      x=x.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g,(_,a,b)=>'<span class="eq-frac"><span class="eq-num">'+latexToVisual(a)+'</span><span class="eq-den">'+latexToVisual(b)+'</span></span>');
-      x=x.replace(/\\sqrt\[([^\]]+)\]\{([^{}]*)\}/g,(_,n,a)=>'<span class="eq-root"><sup>'+latexToVisual(n)+'</sup><span class="eq-op">√</span><span class="eq-radicand">'+latexToVisual(a)+'</span></span>');
-      x=x.replace(/\\sqrt\{([^{}]*)\}/g,(_,a)=>'<span class="eq-root"><span class="eq-op">√</span><span class="eq-radicand">'+latexToVisual(a)+'</span></span>');
-      x=x.replace(/\\(sin|cos|tan)\(([^()]*)\)/g,(_,f,a)=>'<span class="eq-func">'+f+'('+latexToVisual(a)+')</span>');
-      x=x.replace(/\\(sin|cos|tan)\s*/g,(_,f)=>'<span class="eq-func">'+f+'</span>');
-      x=x.replace(/\\pi/g,'π').replace(/\\times/g,'×').replace(/\\cdot/g,'·').replace(/\\leq/g,'≤').replace(/\\geq/g,'≥').replace(/\\neq/g,'≠');
-      x=x.replace(/\^\{([^{}]+)\}/g,(_,a)=>'<sup class="eq-sup">'+latexToVisual(a)+'</sup>');
-      x=x.replace(/_\{([^{}]+)\}/g,(_,a)=>'<sub class="eq-sub">'+latexToVisual(a)+'</sub>');
-      x=x.replace(/\^([A-Za-z0-9])/g,'<sup class="eq-sup">$1</sup>');
-      x=x.replace(/_([A-Za-z0-9])/g,'<sub class="eq-sub">$1</sub>');
-      x=x.replace(/\\sum/g,'Σ').replace(/\\int/g,'∫');
-      x=x.replace(/\\[a-zA-Z]+/g,m=>m.slice(1));
-      return x;
+    function getEquationValue(){return String(eqField.value||'').trim()}
+    function setEditorValue(latex){
+      eqField.value=String(latex||'');
     }
-    function nodeLatex(node){
-      if(node.nodeType===3)return node.nodeValue||'';
-      if(node.nodeType!==1)return '';
-      const c=node.classList;
-      if(c.contains('eq-frac')){const n=node.querySelector('.eq-num'),d=node.querySelector('.eq-den');return `\\frac{${childrenLatex(n)}}{${childrenLatex(d)}}`}
-      if(c.contains('eq-root')){const sup=node.querySelector('sup'),r=node.querySelector('.eq-radicand');return sup?`\\sqrt[${childrenLatex(sup)}]{${childrenLatex(r)}}`:`\\sqrt{${childrenLatex(r)}}`}
-      if(c.contains('eq-sup'))return `^{${childrenLatex(node)}}`;
-      if(c.contains('eq-sub'))return `_{${childrenLatex(node)}}`;
-      if(c.contains('eq-matrix')){const rows=[...node.querySelectorAll('tr')].map(tr=>[...tr.children].map(td=>childrenLatex(td)).join('&'));return `\\begin{pmatrix}${rows.join('\\\\')}\\end{pmatrix}`}
-      if(c.contains('eq-func')){const txt=node.textContent||'';return txt.replace(/^(sin|cos|tan)\((.*)\)$/,(m,f,a)=>`\\${f}(${a})`)}
-      return childrenLatex(node);
+    function updateEquationPreview(){
+      const latex=getEquationValue();
+      if(window.MathJax?.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){}
+      eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">La vista previa aparecerá aquí…</span>';
+      if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});
+      eqStatus.className=latex?'eq-status ok':'eq-status';
+      eqStatus.textContent=latex?'✓ Ecuación lista para insertar':'Escribe o usa las herramientas para construirla.';
     }
-    function childrenLatex(node){return node?[...node.childNodes].map(nodeLatex).join(''):''}
-    function getEquationValue(){return childrenLatex(eqField).replace(/\u00a0/g,' ').replace(/\s+/g,' ').trim()}
-    function setEditorValue(latex){eqField.innerHTML=latexToVisual(latex); if(!eqField.textContent.trim())eqField.innerHTML='';}
-    function updateEquationPreview(){const latex=getEquationValue();if(window.MathJax?.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){} eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">La vista previa aparecerá aquí…</span>';if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});eqStatus.className=latex?'eq-status ok':'eq-status';eqStatus.textContent=latex?'✓ Ecuación lista para insertar':'Escribe o usa las herramientas para construirla.'}
     eqField.addEventListener('input',updateEquationPreview);
     function getFirstMathRange(value){const text=String(value||'');const m=text.match(/\\\((.*?)\\\)/s);return m?{start:m.index,end:m.index+m[0].length,latex:m[1]}:null}
-    function openEquationEditor(input){equationTarget=input;equationRange=getFirstMathRange(input?.value||'');setEditorValue(equationRange?equationRange.latex:'');eqModal.classList.add('open');eqModal.setAttribute('aria-hidden','false');updateEquationPreview();setTimeout(()=>eqField.focus(),50)}
-    function closeEquationEditor(){eqModal.classList.remove('open');eqModal.setAttribute('aria-hidden','true');equationTarget=null;equationRange=null}
-    function insertHtmlAtCaret(html){eqField.focus();document.execCommand('insertHTML',false,html);updateEquationPreview()}
+    function openEquationEditor(input){
+      equationTarget=input;
+      equationRange=getFirstMathRange(input?.value||'');
+      setEditorValue(equationRange?equationRange.latex:'');
+      eqModal.classList.add('open');
+      eqModal.setAttribute('aria-hidden','false');
+      updateEquationPreview();
+      setTimeout(()=>{eqField.focus();},80);
+    }
+    function closeEquationEditor(){eqModal.classList.remove('open');eqModal.setAttribute('aria-hidden','true');equationTarget=null;equationRange=null;}
     function insertToolbar(kind){
-      const map={frac:'<span class="eq-frac"><span class="eq-num">a</span><span class="eq-den">b</span></span>',pow:'x<sup class="eq-sup">2</sup>',root:'<span class="eq-root"><span class="eq-op">√</span><span class="eq-radicand">x</span></span>',nroot:'<span class="eq-root"><sup>n</sup><span class="eq-op">√</span><span class="eq-radicand">x</span></span>',par:'(x)',pi:'π',sin:'<span class="eq-func">sin(x)</span>',cos:'<span class="eq-func">cos(x)</span>',tan:'<span class="eq-func">tan(x)</span>',matrix:'<span class="eq-matrix"><table><tbody><tr><td>a</td><td>b</td></tr><tr><td>c</td><td>d</td></tr></tbody></table></span>',sum:'Σ<sub class="eq-sub">i=1</sub><sup class="eq-sup">n</sup> i',int:'∫<sub class="eq-sub">a</sub><sup class="eq-sup">b</sup> f(x)dx'}; insertHtmlAtCaret(map[kind]||'')}
+      const map={
+        frac:'\\frac{a}{b}',
+        pow:'x^2',
+        root:'\\sqrt{x}',
+        nroot:'\\sqrt[n]{x}',
+        par:'(x)',
+        pi:'\\pi',
+        sin:'\\sin(x)',
+        cos:'\\cos(x)',
+        tan:'\\tan(x)',
+        matrix:'\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}',
+        sum:'\\sum_{i=1}^{n} i',
+        int:'\\int_{a}^{b} f(x)\\,dx'
+      };
+      const latex=map[kind]||'';
+      if(!latex)return;
+      try{
+        eqField.focus();
+        if(typeof eqField.insert==='function') eqField.insert(latex,{selectionMode:'placeholder'});
+        else eqField.value=(eqField.value||'')+latex;
+      }catch(err){eqField.value=(eqField.value||'')+latex;}
+      updateEquationPreview();
+    }
     document.querySelectorAll('[data-eq]').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();insertToolbar(btn.dataset.eq)}));
-    eqCancel.onclick=closeEquationEditor;eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
-    eqInsert.onclick=()=>{const latex=getEquationValue();if(!latex||!equationTarget){eqStatus.textContent='Escribe o inserta una ecuación antes de guardar.';eqStatus.className='eq-status bad';return;}const original=String(equationTarget.value||'');if(equationRange)equationTarget.value=original.slice(0,equationRange.start)+`\\(${latex}\\)`+original.slice(equationRange.end);else equationTarget.value=(original.trim()?original.trim()+' ':'')+`\\(${latex}\\)`;equationTarget.dispatchEvent(new Event('input',{bubbles:true}));closeEquationEditor()};
+    eqCancel.onclick=closeEquationEditor;
+    eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
+    eqInsert.onclick=()=>{
+      const latex=getEquationValue();
+      if(!latex||!equationTarget){eqStatus.textContent='Escribe o inserta una ecuación antes de guardar.';eqStatus.className='eq-status bad';return;}
+      const original=String(equationTarget.value||'');
+      if(equationRange) equationTarget.value=original.slice(0,equationRange.start)+`\\(${latex}\\)`+original.slice(equationRange.end);
+      else equationTarget.value=(original.trim()?original.trim()+' ':'')+`\\(${latex}\\)`;
+      equationTarget.dispatchEvent(new Event('input',{bubbles:true}));
+      closeEquationEditor();
+    };
     function renderAdmin(){
       adminForm.innerHTML='';
       currentBank().forEach((item,index)=>{
