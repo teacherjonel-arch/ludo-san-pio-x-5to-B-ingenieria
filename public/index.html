@@ -518,7 +518,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       currentBank().forEach((item,index)=>{
         const card=document.createElement('div'); card.className='admin-problem'; card.dataset.image=item.image||'';
         card.innerHTML=`<strong>Problema ${index+1}</strong>
-          <div class="eq-target-row"><div><textarea data-question placeholder="Escribe aquí el enunciado de la pregunta (sin LaTeX)"></textarea><span class="inline-eq-label">Ecuación editable</span><div data-question-math></div><span class="preview-label">Vista previa en vivo</span><div class="edit-preview empty" data-question-preview></div><div class="eq-help">La ecuación se edita directamente como fórmula matemática, no como código LaTeX.</div></div></div>
+          <div class="eq-target-row"><div><textarea data-question placeholder="Escribe aquí el enunciado de la pregunta (sin LaTeX)"></textarea><span class="inline-eq-label">Ecuación matemática editable</span><div data-question-math></div><span class="preview-label">Vista previa en vivo</span><div class="edit-preview empty" data-question-preview></div><div class="eq-help">Escribe o modifica la ecuación aquí. Se guarda automáticamente con el problema; no necesitas escribir código LaTeX.</div></div></div>
           <div class="admin-options">
             <div class="eq-target-row"><div><textarea data-option="0" placeholder="Opción 1"></textarea><div data-option-math="0"></div><div class="edit-preview empty" data-option-preview="0"></div></div></div>
             <div class="eq-target-row"><div><textarea data-option="1" placeholder="Opción 2"></textarea><div data-option-math="1"></div><div class="edit-preview empty" data-option-preview="1"></div></div></div>
@@ -529,13 +529,13 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
           <label class="image-upload">Imagen de la pregunta (opcional)<input type="file" data-image-input accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"></label>
           <img class="image-preview" data-image-preview alt="Vista previa"><button class="remove-image" type="button">Quitar imagen</button>`;
         const qInput=card.querySelector('[data-question]'); qInput.value=item.q||'';
-        const qHost=card.querySelector('[data-question-math]'); const qParts=splitFirstMath(qInput.value); if(qParts.latex){qInput.value=[qParts.before,qParts.after].filter(Boolean).join(' ').trim(); const mf=makeInlineMathField(item.q).field; qHost.replaceChildren(mf);}
+        const qHost=card.querySelector('[data-question-math]'); const qParts=splitFirstMath(qInput.value); if(qParts.latex){qInput.value=[qParts.before,qParts.after].filter(Boolean).join(' ').trim();} const qMf=makeInlineMathField(item.q).field; qHost.hidden=false; qHost.replaceChildren(qMf);
         const qPreview=card.querySelector('[data-question-preview]');
         const refreshQ=()=>{const mf=qHost.querySelector('math-field');updateEditPreview(qPreview,combineMathParts(qInput.value,mf?.value||'',mf?'':''));};
         attachLivePreview(qInput,qPreview); qInput.addEventListener('input',refreshQ); qHost.addEventListener('input',refreshQ);
         card.querySelectorAll('[data-option]').forEach((input,i)=>{
           input.value=item.a?.[i]||''; const host=card.querySelector(`[data-option-math="${i}"]`); const parts=splitFirstMath(input.value);
-          if(parts.latex){input.value=[parts.before,parts.after].filter(Boolean).join(' ').trim();host.replaceChildren(makeInlineMathField(item.a?.[i]||'').field);}
+          if(parts.latex){input.value=[parts.before,parts.after].filter(Boolean).join(' ').trim();} const optionMf=makeInlineMathField(item.a?.[i]||'').field; host.hidden=false; host.replaceChildren(optionMf);
           const preview=card.querySelector(`[data-option-preview="${i}"]`); attachLivePreview(input,preview); input.addEventListener('input',()=>updateEditPreview(preview,combineMathParts(input.value,host.querySelector('math-field')?.value||'',''))); host.addEventListener('input',()=>updateEditPreview(preview,combineMathParts(input.value,host.querySelector('math-field')?.value||'','')));
         });
         card.querySelector('[data-correct]').value=String(item.ok??0);
