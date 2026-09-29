@@ -77,9 +77,7 @@ linear-gradient(180deg,#d7edf6 0%,#e7f4f8 48%,#d5e9f2 100%);position:relative}
 @media(max-width:620px){.quiz-card{padding:20px;border-radius:20px}.answers{grid-template-columns:1fr}.answer{min-height:54px}}
 
     #confettiCanvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:9999}
-
-.eq-visual-editor{font-family:Cambria Math, STIX Two Math, Times New Roman, serif;font-size:1.45rem;line-height:1.7;overflow:auto;cursor:text;text-align:left;white-space:normal}.eq-visual-editor:empty:before{content:attr(data-placeholder);color:#a1adb7;font-family:inherit}.eq-visual-editor:focus{outline:0;border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.10)}
-math-field.eq-field{display:block;width:100%;min-height:86px;padding:12px 14px;border:2px solid #cbd8e2;border-radius:14px;background:#fff;color:#203e56;font-size:1.45rem;line-height:1.5;box-sizing:border-box;--selection-background-color:rgba(49,83,122,.16);--contains-highlight-background-color:rgba(49,83,122,.10);--smart-fence-color:#31537a} math-field.eq-field:focus-within{border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.10)}.eq-frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;line-height:1.05;margin:0 .12em}.eq-frac .eq-num{border-bottom:1.5px solid #243b53;padding:0 .18em;min-width:1.1em}.eq-frac .eq-den{padding:0 .18em;min-width:1.1em}.eq-sup{font-size:.7em;vertical-align:super;line-height:0}.eq-sub{font-size:.7em;vertical-align:sub;line-height:0}.eq-root{display:inline-flex;align-items:center;vertical-align:middle}.eq-root .eq-radicand{border-top:1.5px solid #243b53;padding:0 .12em;margin-left:.03em}.eq-func{white-space:nowrap}.eq-slot{display:inline-block;min-width:.45em;border-bottom:1px dotted #789;outline:0}.eq-matrix{display:inline-table;border-collapse:collapse;vertical-align:middle;margin:0 .2em}.eq-matrix td{border:0;padding:0 .28em;text-align:center}.eq-op{font-family:Cambria Math,STIX Two Math,serif}.eq-caret-hint{font-size:.68rem;color:#718496;margin-top:5px}</style>
+</style>
 <style>
 #networkPanel{background:rgba(255,255,255,.94);border:1px solid var(--line);border-radius:18px;padding:16px;box-shadow:var(--shadow);display:block}
 #networkPanel h2{margin:0 0 8px;font-size:1.15rem}.net-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.net-box{border:1px solid var(--line);border-radius:14px;padding:12px;background:#f8fbfd}.net-box strong{display:block;margin-bottom:8px}.net-row{display:flex;gap:8px;flex-wrap:wrap}.net-row input,.net-row select{flex:1;min-width:120px;padding:10px;border:1px solid var(--line);border-radius:10px}.net-btn{border:0;border-radius:10px;padding:10px 14px;font-weight:800;background:var(--navy);color:#fff}.net-btn.alt{background:var(--venecia)}.net-status{margin-top:10px;padding:9px 11px;border-radius:10px;background:#eef7fb;font-weight:700}.net-name{margin-bottom:10px}.net-name label{display:block;font-weight:800;font-size:.78rem;margin-bottom:5px}.net-name input{width:100%;box-sizing:border-box;padding:10px;border:1px solid var(--line);border-radius:10px}.net-start{margin-top:10px;width:100%;display:none}.net-players{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:7px}.net-player{padding:7px 8px;border-radius:10px;background:#f7fafc;font-size:.72rem;font-weight:800}.net-player small{display:block;color:#708196;font-weight:700;margin-top:2px}.room-code{font-size:1.6rem;letter-spacing:.18em;font-weight:900}.net-hidden{display:none!important}
@@ -185,13 +183,12 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 @media(max-width:620px){.quiz-card{width:96vw!important;max-height:94vh!important;border-radius:22px!important}.quiz-head{padding:18px 17px 13px}.quiz-body{padding:18px 17px 20px}.answers{grid-template-columns:1fr!important}.answer{min-height:62px!important}}
 
 .admin-login-overlay{position:fixed;inset:0;background:rgba(9,25,40,.72);display:flex;align-items:center;justify-content:center;z-index:10000;padding:20px}.admin-login-card{width:min(420px,94vw);background:#fff;border-radius:22px;padding:24px;box-shadow:0 25px 70px rgba(0,0,0,.28);text-align:center}.admin-login-card h2{margin:0 0 7px;color:var(--navy)}.admin-login-card p{margin:0 0 18px;color:#65798c;font-size:.9rem}.admin-login-card input{width:100%;box-sizing:border-box;padding:13px 14px;border:2px solid #dce5ec;border-radius:12px;font-size:1rem;text-align:center}.admin-login-actions{display:flex;gap:8px;margin-top:12px}.admin-login-actions button{flex:1;border:0;border-radius:12px;padding:12px;font-weight:800;cursor:pointer}.admin-login-enter{background:var(--navy);color:#fff}.admin-login-cancel{background:#edf2f5;color:#334}.admin-login-msg{min-height:1.2em;margin-top:10px;color:#c44;font-size:.8rem;font-weight:700}.admin-lock-note{font-size:.72rem;color:#73879a;margin-top:10px}.admin-problem textarea[data-question],.admin-problem textarea[data-option]{width:100%;box-sizing:border-box;min-height:68px;resize:vertical;border:1px solid #cbd7e1;border-radius:10px;padding:10px 12px;font:inherit;line-height:1.45;background:#fff}.eq-fallback-wrap textarea:focus{outline:0;border-color:#31537a}.eq-status{margin-top:8px;font-size:.72rem;font-weight:800;color:#557}.eq-status.ok{color:#19734a}.eq-status.bad{color:#b23b3b}.eq-help{font-size:.7rem;color:#6f8190;margin-top:5px}
-.math-editor-wrap{margin-top:9px;padding:10px;border:1px solid #d7e0e8;border-radius:12px;background:#f7fafc}.math-editor-label{display:block;font-size:.72rem;font-weight:800;color:#53677e;margin-bottom:6px}.math-field{display:block;width:100%;min-height:48px;box-sizing:border-box;border:1px solid #cbd7e1;border-radius:10px;background:#fff;padding:8px 10px;font-size:1.15rem}.math-editor-actions{display:flex;gap:7px;margin-top:7px}.math-editor-actions button{border:0;border-radius:9px;padding:7px 10px;background:#e9f0f5;color:#29465d;font-size:.72rem;font-weight:800;cursor:pointer}.math-hint{font-size:.68rem;color:#718496;margin-top:6px} .eq-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(7,22,36,.68);z-index:10001;padding:18px}.eq-modal.open{display:flex}.eq-card{width:min(760px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 28px 80px rgba(0,0,0,.3);padding:20px}.eq-card h3{margin:0 0 5px;color:var(--navy);font-size:1.15rem}.eq-sub{margin:0 0 12px;color:#6b7d8f;font-size:.78rem}.eq-field{display:block;width:100%;min-height:72px;box-sizing:border-box;border:2px solid #cbd8e2;border-radius:14px;background:#fff;padding:12px;font-size:1.45rem}.eq-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.eq-tool{border:1px solid #d2dee7;border-radius:10px;background:#f5f8fa;color:#203e56;padding:8px 11px;font-weight:850;cursor:pointer}.eq-tool:hover{background:#e9f3fa}.eq-preview{margin-top:8px;padding:13px;border:1px dashed #cbd8e2;border-radius:12px;background:#fafcfd;min-height:40px;text-align:center}.eq-actions{display:flex;gap:9px;margin-top:12px}.eq-actions button{flex:1;border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer}.eq-insert{background:var(--navy);color:#fff}.eq-cancel{background:#edf2f5;color:#31485d}.eq-open{border:1px solid #c9d9e5;background:#eef7fc;color:#165d88;border-radius:8px;padding:6px 9px;font-size:.72rem;font-weight:900;cursor:pointer;margin-top:6px}.eq-target-row{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:start}.eq-target-row input{margin-top:6px!important}.eq-note{font-size:.68rem;color:#708395;margin-top:7px}.edit-preview{margin-top:6px;min-height:28px;padding:7px 9px;border-radius:9px;background:#fbfdff;border:1px dashed #d5e0e8;color:#29445a;font-size:.95rem;line-height:1.5;overflow:auto}.edit-preview.empty{color:#94a4b1;font-size:.72rem;font-style:italic}.preview-label{display:block;font-size:.66rem;font-weight:800;color:#708395;margin-top:5px}
+.math-editor-wrap{margin-top:9px;padding:10px;border:1px solid #d7e0e8;border-radius:12px;background:#f7fafc}.math-editor-label{display:block;font-size:.72rem;font-weight:800;color:#53677e;margin-bottom:6px}.math-field{display:block;width:100%;min-height:48px;box-sizing:border-box;border:1px solid #cbd7e1;border-radius:10px;background:#fff;padding:8px 10px;font-size:1.15rem}.math-editor-actions{display:flex;gap:7px;margin-top:7px}.math-editor-actions button{border:0;border-radius:9px;padding:7px 10px;background:#e9f0f5;color:#29465d;font-size:.72rem;font-weight:800;cursor:pointer}.math-hint{font-size:.68rem;color:#718496;margin-top:6px} .eq-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(7,22,36,.68);z-index:10001;padding:18px}.eq-modal.open{display:flex}.eq-card{width:min(760px,96vw);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 28px 80px rgba(0,0,0,.3);padding:20px}.eq-card h3{margin:0 0 5px;color:var(--navy);font-size:1.15rem}.eq-sub{margin:0 0 12px;color:#6b7d8f;font-size:.78rem}.eq-visual{display:block;width:100%;min-height:82px;box-sizing:border-box;border:2px solid #cbd8e2;border-radius:14px;background:#fff;padding:14px;font-size:1.45rem;line-height:1.9;text-align:left;cursor:text;outline:none;overflow:auto}.eq-visual:focus{border-color:#31537a;box-shadow:0 0 0 3px rgba(49,83,122,.12)}.eq-visual:empty:before{content:'Escribe aquí tu ecuación…';color:#9aa9b5}.eq-frac{display:inline-flex;vertical-align:middle;flex-direction:column;align-items:stretch;justify-content:center;min-width:38px;margin:0 3px}.eq-frac .eq-slot:first-child{border-bottom:1.5px solid #1d3448}.eq-slot{display:inline-block;min-width:18px;min-height:1.1em;padding:0 4px;outline:none;vertical-align:middle}.eq-frac .eq-slot{display:block;text-align:center;min-height:1.15em}.eq-power{display:inline-flex;align-items:flex-start;vertical-align:middle}.eq-power sup{display:inline-block;min-width:14px;min-height:1em;font-size:.68em;line-height:1;outline:none}.eq-root{display:inline-flex;align-items:center;vertical-align:middle}.eq-root::before{content:'√';font-size:1.35em;line-height:1}.eq-root .eq-slot{border-top:1.5px solid #1d3448;margin-left:2px}.eq-nroot{display:inline-flex;align-items:flex-start;vertical-align:middle}.eq-nroot::before{content:'√';font-size:1.35em;line-height:1;margin-top:.15em}.eq-nroot .eq-index{font-size:.62em;min-width:12px;outline:none}.eq-nroot .eq-slot{border-top:1.5px solid #1d3448;margin-left:2px}.eq-fn{font-style:normal;margin-right:2px}.eq-matrix{display:inline-grid;grid-template-columns:repeat(2,minmax(38px,1fr));gap:4px;padding:5px 9px;border-left:2px solid #1d3448;border-right:2px solid #1d3448;border-radius:5px;vertical-align:middle;margin:0 4px}.eq-matrix .eq-slot{border:1px solid #d8e1e8;border-radius:4px;min-height:30px;text-align:center}.eq-sum,.eq-integral{display:inline-flex;align-items:center;vertical-align:middle;font-size:1.35em;margin:0 4px}.eq-sum .eq-slot,.eq-integral .eq-slot{font-size:.58em;min-width:22px}.eq-delete{color:#b43a3a}.eq-visual .eq-slot:focus,.eq-visual sup:focus,.eq-visual .eq-index:focus{background:#eef6fb;border-radius:3px}.eq-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0}.eq-tool{border:1px solid #d2dee7;border-radius:10px;background:#f5f8fa;color:#203e56;padding:8px 11px;font-weight:850;cursor:pointer}.eq-tool:hover{background:#e9f3fa}.eq-preview{margin-top:8px;padding:13px;border:1px dashed #cbd8e2;border-radius:12px;background:#fafcfd;min-height:40px;text-align:center}.eq-actions{display:flex;gap:9px;margin-top:12px}.eq-actions button{flex:1;border:0;border-radius:12px;padding:11px;font-weight:900;cursor:pointer}.eq-insert{background:var(--navy);color:#fff}.eq-cancel{background:#edf2f5;color:#31485d}.eq-open{border:1px solid #c9d9e5;background:#eef7fc;color:#165d88;border-radius:8px;padding:6px 9px;font-size:.72rem;font-weight:900;cursor:pointer;margin-top:6px}.eq-target-row{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:start}.eq-target-row input{margin-top:6px!important}.eq-note{font-size:.68rem;color:#708395;margin-top:7px}.edit-preview{margin-top:6px;min-height:28px;padding:7px 9px;border-radius:9px;background:#fbfdff;border:1px dashed #d5e0e8;color:#29445a;font-size:.95rem;line-height:1.5;overflow:auto}.edit-preview.empty{color:#94a4b1;font-size:.72rem;font-style:italic}.preview-label{display:block;font-size:.66rem;font-weight:800;color:#708395;margin-top:5px}
 </style>
 
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
-<script src="https://unpkg.com/mathlive@0.108.2/dist/mathlive.min.js"></script>
 </head>
 <body>
 <div class="admin-login-overlay" id="adminLoginOverlay" hidden style="display:none">
@@ -207,24 +204,25 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 <div class="eq-modal" id="eqModal" aria-hidden="true">
   <div class="eq-card">
     <h3>∑ Editor de ecuaciones</h3>
-    <p class="eq-sub">Edita la ecuación de forma visual, como en Word. Puedes escribir directamente y usar las herramientas matemáticas; no verás código LaTeX.</p>
-    <math-field id="eqField" class="eq-field" virtual-keyboard-mode="manual" smart-mode="false" aria-label="Editor visual de ecuaciones"></math-field>
+    <p class="eq-sub">Editor visual: escribe y modifica la ecuación directamente, como en Word. No necesitas escribir LaTeX.</p>
+    <div id="eqVisual" class="eq-visual" contenteditable="true" spellcheck="false" aria-label="Editor visual de ecuaciones"></div>
     <div class="eq-toolbar" id="eqToolbar">
-      <button type="button" class="eq-tool" data-eq="frac">a⁄b</button>
-      <button type="button" class="eq-tool" data-eq="pow">x²</button>
-      <button type="button" class="eq-tool" data-eq="root">√x</button>
-      <button type="button" class="eq-tool" data-eq="nroot">ⁿ√x</button>
-      <button type="button" class="eq-tool" data-eq="par">( )</button>
-      <button type="button" class="eq-tool" data-eq="pi">π</button>
-      <button type="button" class="eq-tool" data-eq="sin">sin</button>
-      <button type="button" class="eq-tool" data-eq="cos">cos</button>
-      <button type="button" class="eq-tool" data-eq="tan">tan</button>
-      <button type="button" class="eq-tool" data-eq="matrix">Matriz 2×2</button>
-      <button type="button" class="eq-tool" data-eq="sum">Σ</button>
-      <button type="button" class="eq-tool" data-eq="int">∫</button>
+      <button type="button" class="eq-tool" data-eq-type="frac">a⁄b</button>
+      <button type="button" class="eq-tool" data-eq-type="power">x²</button>
+      <button type="button" class="eq-tool" data-eq-type="sqrt">√x</button>
+      <button type="button" class="eq-tool" data-eq-type="nroot">ⁿ√x</button>
+      <button type="button" class="eq-tool" data-eq-type="paren">( )</button>
+      <button type="button" class="eq-tool" data-eq-type="pi">π</button>
+      <button type="button" class="eq-tool" data-eq-type="sin">sin</button>
+      <button type="button" class="eq-tool" data-eq-type="cos">cos</button>
+      <button type="button" class="eq-tool" data-eq-type="tan">tan</button>
+      <button type="button" class="eq-tool" data-eq-type="matrix">Matriz 2×2</button>
+      <button type="button" class="eq-tool" data-eq-type="sum">Σ</button>
+      <button type="button" class="eq-tool" data-eq-type="integral">∫</button>
     </div>
-    <div class="eq-preview" id="eqPreview">Vista previa de la ecuación</div><div class="eq-status" id="eqStatus"></div><div id="eqLatexMirror" style="display:none"></div>
-    <div class="eq-note">El formato técnico se guarda automáticamente; el alumno solo trabaja con la ecuación visual.</div>
+    <div class="eq-preview" id="eqPreview">Vista previa de la ecuación</div>
+    <div class="eq-status" id="eqStatus"></div>
+    <div class="eq-note">Puedes hacer clic dentro de la fracción, potencia, raíz o matriz y escribir directamente.</div>
     <div class="eq-actions"><button type="button" class="eq-cancel" id="eqCancel">Cancelar</button><button type="button" class="eq-insert" id="eqInsert">Insertar ecuación</button></div>
   </div>
 </div>
@@ -393,68 +391,92 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
     function compressImage(file){return new Promise((resolve,reject)=>{if(!file)return resolve('');const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const image=new Image();image.onload=()=>{const limit=720,ratio=Math.min(1,limit/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*ratio);canvas.height=Math.round(image.height*ratio);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.72))};image.onerror=reject;image.src=reader.result};reader.readAsDataURL(file)})}
     let equationTarget=null;
     let equationRange=null;
-    const eqModal=document.getElementById('eqModal'),eqField=document.getElementById('eqField'),eqPreview=document.getElementById('eqPreview'),eqStatus=document.getElementById('eqStatus'),eqCancel=document.getElementById('eqCancel'),eqInsert=document.getElementById('eqInsert');
-    function esc(t){return String(t??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-    function getEquationValue(){return String(eqField.value||'').trim()}
-    function setEditorValue(latex){
-      eqField.value=String(latex||'');
+    let savedEqRange=null;
+    const eqModal=document.getElementById('eqModal'),eqVisual=document.getElementById('eqVisual'),eqPreview=document.getElementById('eqPreview'),eqStatus=document.getElementById('eqStatus'),eqCancel=document.getElementById('eqCancel'),eqInsert=document.getElementById('eqInsert');
+    function escHtml(v){return String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+    function simpleLatexToVisual(latex){
+      let s=String(latex||'').replace(/\\\(|\\\)/g,'').trim();
+      if(!s)return '';
+      // Build common structures from the stored LaTeX without exposing the code.
+      let h=escHtml(s);
+      h=h.replace(/\\frac\{([^{}]*)\}\{([^{}]*)\}/g,'<span class="eq-frac"><span class="eq-slot">$1</span><span class="eq-slot">$2</span></span>');
+      h=h.replace(/\\sqrt\[([^\]]+)\]\{([^{}]*)\}/g,'<span class="eq-nroot"><span class="eq-index">$1</span><span class="eq-slot">$2</span></span>');
+      h=h.replace(/\\sqrt\{([^{}]*)\}/g,'<span class="eq-root"><span class="eq-slot">$1</span></span>');
+      h=h.replace(/\\(sin|cos|tan)\(([^()]*)\)/g,'<span class="eq-fn">$1</span>(<span class="eq-slot">$2</span>)');
+      h=h.replace(/([A-Za-z0-9π]+)\^\{([^{}]+)\}/g,'<span class="eq-power"><span>$1</span><sup contenteditable="true">$2</sup></span>');
+      h=h.replace(/\\pi/g,'π').replace(/\\times/g,'×').replace(/\\cdot/g,'·').replace(/\\leq/g,'≤').replace(/\\geq/g,'≥').replace(/\\neq/g,'≠').replace(/\\in/g,'∈');
+      h=h.replace(/\\begin\{pmatrix\}([^]*?)\\end\{pmatrix\}/g,(_,body)=>{const rows=body.split(/\\\\/);const cells=[];rows.forEach(r=>r.split('&').forEach(c=>cells.push('<span class="eq-slot" contenteditable="true">'+escHtml(c)+'</span>')));while(cells.length<4)cells.push('<span class="eq-slot" contenteditable="true"></span>');return '<span class="eq-matrix">'+cells.slice(0,4).join('')+'</span>';});
+      h=h.replace(/\\left/g,'').replace(/\\right/g,'').replace(/[{}]/g,'');
+      return h;
     }
-    function updateEquationPreview(){
-      const latex=getEquationValue();
-      if(window.MathJax?.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){}
-      eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">La vista previa aparecerá aquí…</span>';
-      if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});
-      eqStatus.className=latex?'eq-status ok':'eq-status';
-      eqStatus.textContent=latex?'✓ Ecuación lista para insertar':'Escribe o usa las herramientas para construirla.';
+    function getFirstMathRange(value){const text=String(value||'');const m=text.match(/\\\((.*?)\\\)/s);return m?{start:m.index,end:m.index+m[0].length,latex:m[1]}:null;}
+    function focusEnd(el){if(!el)return;el.focus();const r=document.createRange();r.selectNodeContents(el);r.collapse(false);const sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);savedEqRange=r.cloneRange();}
+    function rememberEqSelection(){const sel=window.getSelection();if(!sel||!sel.rangeCount||!eqVisual.contains(sel.anchorNode))return;savedEqRange=sel.getRangeAt(0).cloneRange();}
+    ['keyup','mouseup','input','focus','blur'].forEach(ev=>eqVisual?.addEventListener(ev,rememberEqSelection));
+    function setEqHTML(html){if(!eqVisual)return;eqVisual.innerHTML=html;focusEnd(eqVisual);}
+    function slot(text=''){return `<span class="eq-slot" contenteditable="true">${escHtml(text)}</span>`;}
+    function insertEqHTML(html,focusSelector='.eq-slot'){
+      if(!eqVisual)return;
+      eqVisual.focus();
+      const sel=window.getSelection();let range=savedEqRange;
+      if(!range || !eqVisual.contains(range.commonAncestorContainer)){range=document.createRange();range.selectNodeContents(eqVisual);range.collapse(false)}
+      sel.removeAllRanges();sel.addRange(range);range.deleteContents();
+      const holder=document.createElement('span');holder.innerHTML=html;const frag=document.createDocumentFragment();while(holder.firstChild)frag.appendChild(holder.firstChild);const nodes=[...frag.childNodes];range.insertNode(frag);
+      const first=(nodes[0]?.querySelector?.(focusSelector))||nodes[0];
+      if(first){const r=document.createRange();r.selectNodeContents(first);r.collapse(false);sel.removeAllRanges();sel.addRange(r);savedEqRange=r.cloneRange();}
+      else focusEnd(eqVisual);updateEquationPreview();
     }
-    eqField.addEventListener('input',updateEquationPreview);
-    function getFirstMathRange(value){const text=String(value||'');const m=text.match(/\\\((.*?)\\\)/s);return m?{start:m.index,end:m.index+m[0].length,latex:m[1]}:null}
-    function openEquationEditor(input){
-      equationTarget=input;
-      equationRange=getFirstMathRange(input?.value||'');
-      setEditorValue(equationRange?equationRange.latex:'');
-      eqModal.classList.add('open');
-      eqModal.setAttribute('aria-hidden','false');
-      updateEquationPreview();
-      setTimeout(()=>{eqField.focus();},80);
-    }
-    function closeEquationEditor(){eqModal.classList.remove('open');eqModal.setAttribute('aria-hidden','true');equationTarget=null;equationRange=null;}
-    function insertToolbar(kind){
+    function insertEqTool(type){
       const map={
-        frac:'\\frac{a}{b}',
-        pow:'x^2',
-        root:'\\sqrt{x}',
-        nroot:'\\sqrt[n]{x}',
-        par:'(x)',
-        pi:'\\pi',
-        sin:'\\sin(x)',
-        cos:'\\cos(x)',
-        tan:'\\tan(x)',
-        matrix:'\\begin{pmatrix}a&b\\\\c&d\\end{pmatrix}',
-        sum:'\\sum_{i=1}^{n} i',
-        int:'\\int_{a}^{b} f(x)\\,dx'
+        frac:{html:`<span class="eq-frac"><span class="eq-slot" contenteditable="true"></span><span class="eq-slot" contenteditable="true"></span></span>`,focus:'.eq-slot'},
+        power:{html:`<span class="eq-power"><span contenteditable="true">x</span><sup contenteditable="true">2</sup></span>`,focus:'sup'},
+        sqrt:{html:`<span class="eq-root"><span class="eq-slot" contenteditable="true"></span></span>`,focus:'.eq-slot'},
+        nroot:{html:`<span class="eq-nroot"><span class="eq-index" contenteditable="true">n</span><span class="eq-slot" contenteditable="true"></span></span>`,focus:'.eq-slot'},
+        paren:{html:`(<span class="eq-slot" contenteditable="true"></span>)`,focus:'.eq-slot'},
+        pi:{html:'π',focus:null},
+        sin:{html:`<span class="eq-fn">sin</span>(<span class="eq-slot" contenteditable="true">x</span>)`,focus:'.eq-slot'},
+        cos:{html:`<span class="eq-fn">cos</span>(<span class="eq-slot" contenteditable="true">x</span>)`,focus:'.eq-slot'},
+        tan:{html:`<span class="eq-fn">tan</span>(<span class="eq-slot" contenteditable="true">x</span>)`,focus:'.eq-slot'},
+        matrix:{html:`<span class="eq-matrix"><span class="eq-slot" contenteditable="true"></span><span class="eq-slot" contenteditable="true"></span><span class="eq-slot" contenteditable="true"></span><span class="eq-slot" contenteditable="true"></span></span>`,focus:'.eq-slot'},
+        sum:{html:`<span class="eq-sum">Σ<span class="eq-slot" contenteditable="true">i=1</span><span class="eq-slot" contenteditable="true">n</span></span>`,focus:'.eq-slot'},
+        integral:{html:`<span class="eq-integral">∫<span class="eq-slot" contenteditable="true">a→b</span></span>`,focus:'.eq-slot'}
       };
-      const latex=map[kind]||'';
-      if(!latex)return;
-      try{
-        eqField.focus();
-        if(typeof eqField.insert==='function') eqField.insert(latex,{selectionMode:'placeholder'});
-        else eqField.value=(eqField.value||'')+latex;
-      }catch(err){eqField.value=(eqField.value||'')+latex;}
-      updateEquationPreview();
+      const x=map[type];if(x)insertEqHTML(x.html,x.focus||'.eq-slot');
     }
-    document.querySelectorAll('[data-eq]').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();insertToolbar(btn.dataset.eq)}));
-    eqCancel.onclick=closeEquationEditor;
-    eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
-    eqInsert.onclick=()=>{
-      const latex=getEquationValue();
-      if(!latex||!equationTarget){eqStatus.textContent='Escribe o inserta una ecuación antes de guardar.';eqStatus.className='eq-status bad';return;}
-      const original=String(equationTarget.value||'');
-      if(equationRange) equationTarget.value=original.slice(0,equationRange.start)+`\\(${latex}\\)`+original.slice(equationRange.end);
-      else equationTarget.value=(original.trim()?original.trim()+' ':'')+`\\(${latex}\\)`;
-      equationTarget.dispatchEvent(new Event('input',{bubbles:true}));
-      closeEquationEditor();
-    };
+    function nodeToLatex(node){
+      if(node.nodeType===Node.TEXT_NODE)return node.nodeValue.replace(/π/g,'\\pi').replace(/×/g,'\\times').replace(/·/g,'\\cdot').replace(/≤/g,'\\leq').replace(/≥/g,'\\geq').replace(/≠/g,'\\neq').replace(/∈/g,'\\in');
+      if(node.nodeType!==Node.ELEMENT_NODE)return '';
+      const kids=[...node.childNodes].map(nodeToLatex).join('');
+      if(node.classList.contains('eq-frac')){const s=[...node.querySelectorAll(':scope > .eq-slot')];return `\\frac{${s[0]?nodeToLatex(s[0]):''}}{${s[1]?nodeToLatex(s[1]):''}}`;}
+      if(node.classList.contains('eq-root'))return `\\sqrt{${nodeToLatex(node.querySelector('.eq-slot'))}}`;
+      if(node.classList.contains('eq-nroot'))return `\\sqrt[${nodeToLatex(node.querySelector('.eq-index'))}]{${nodeToLatex(node.querySelector('.eq-slot'))}}`;
+      if(node.classList.contains('eq-power')){const b=node.children[0],e=node.children[1];return `${nodeToLatex(b)}^{${nodeToLatex(e)}}`;}
+      if(node.classList.contains('eq-fn'))return node.textContent;
+      if(node.classList.contains('eq-matrix')){const c=[...node.querySelectorAll(':scope > .eq-slot')].map(nodeToLatex);return `\\begin{pmatrix}${c.slice(0,2).join('&')}\\\\${c.slice(2,4).join('&')}\\end{pmatrix}`;}
+      if(node.classList.contains('eq-sum')){const ss=[...node.querySelectorAll(':scope > .eq-slot')];return `\\sum_{${nodeToLatex(ss[0]||document.createTextNode(''))}^{${nodeToLatex(ss[1]||document.createTextNode(''))}}`;}
+      if(node.classList.contains('eq-integral'))return `\\int_{${nodeToLatex(node.querySelector('.eq-slot'))}}`;
+      return kids;
+    }
+    function getEquationValue(){return [...(eqVisual?.childNodes||[])].map(nodeToLatex).join('').trim();}
+    function updateEquationPreview(){if(!eqPreview)return;const latex=getEquationValue();if(window.MathJax?.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){};eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">La vista previa aparecerá aquí…</span>';if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});if(eqStatus){eqStatus.className='eq-status '+(latex?'ok':'');eqStatus.textContent=latex?'✓ Ecuación lista para insertar':'Escribe o usa las herramientas para construirla.';}}
+    function openEquationEditor(input){equationTarget=input;equationRange=getFirstMathRange(input?.value||'');setEqHTML(simpleLatexToVisual(equationRange?equationRange.latex:''));eqModal.classList.add('open');eqModal.setAttribute('aria-hidden','false');updateEquationPreview();setTimeout(()=>focusEnd(eqVisual),50)}
+    function closeEquationEditor(){eqModal.classList.remove('open');eqModal.setAttribute('aria-hidden','true');equationTarget=null;equationRange=null;savedEqRange=null}
+    document.querySelectorAll('[data-eq-type]').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();insertEqTool(btn.dataset.eqType)}));
+    eqVisual?.addEventListener('input',updateEquationPreview);eqCancel.onclick=closeEquationEditor;eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
+    eqInsert.onclick=()=>{const latex=getEquationValue();if(!latex||!equationTarget){eqStatus.textContent='Escribe o inserta una ecuación antes de guardar.';eqStatus.className='eq-status bad';return;}if(insertEquationIntoTarget(equationTarget,latex))closeEquationEditor()};
+    function insertEquationIntoTarget(input,latex){const clean=String(latex||'').trim();if(!input||!clean)return false;const value=String(input.value||'');const wrapped=`\\(${clean}\\)`;let next;if(equationRange&&equationRange.start>=0)next=value.slice(0,equationRange.start)+wrapped+value.slice(equationRange.end);else next=value.trim()?value.trim()+' '+wrapped:wrapped;input.value=next.trim();input.dispatchEvent(new Event('input',{bubbles:true}));input.focus();return true;}
+    function updateEditPreview(preview, value){
+      if(!preview)return;
+      if(window.MathJax && MathJax.typesetClear)try{MathJax.typesetClear([preview])}catch(e){}
+      const text=String(value||'').trim();
+      preview.textContent=text||'Vista previa de la pregunta o alternativa';
+      preview.classList.toggle('empty',!text);
+      if(text && window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise([preview]).catch(()=>{});
+    }
+    function attachLivePreview(input,preview){
+      updateEditPreview(preview,input.value);
+      input.addEventListener('input',()=>updateEditPreview(preview,input.value));
+    }
     function renderAdmin(){
       adminForm.innerHTML='';
       currentBank().forEach((item,index)=>{
