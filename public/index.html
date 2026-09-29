@@ -188,7 +188,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script src="https://unpkg.com/mathlive@0.110.0/dist/mathlive.min.js"></script>
+<script src="https://unpkg.com/mathlive@0.108.1/dist/mathlive.min.js"></script>
 </head>
 <body>
 <div class="admin-login-overlay" id="adminLoginOverlay" hidden style="display:none">
@@ -205,8 +205,8 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
   <div class="eq-card">
     <h3>∑ Editor de ecuaciones</h3>
     <p class="eq-sub">Edita la ecuación directamente. Puedes escribir con el teclado o usar las herramientas; la vista previa muestra exactamente lo que se guardará.</p>
-    <math-field id="eqField" class="eq-field" virtual-keyboard-mode="onfocus"></math-field>
-    <div class="eq-toolbar">
+    <math-field id="eqField" class="eq-field" virtual-keyboard-mode="onfocus"></math-field><textarea id="eqFallback" style="display:none;width:100%;min-height:70px;margin-top:8px;padding:10px;border:1px solid #cbd8e2;border-radius:10px;font-family:monospace" placeholder="Escribe aquí la ecuación en formato matemático"></textarea>
+    <div class="eq-toolbar" id="eqToolbar">
       <button type="button" class="eq-tool" data-eq="\frac{a}{b}">a⁄b</button>
       <button type="button" class="eq-tool" data-eq="^{2}">x²</button>
       <button type="button" class="eq-tool" data-eq="\sqrt{x}">√x</button>
@@ -220,7 +220,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       <button type="button" class="eq-tool" data-eq="\sum_{i=1}^{n} i">Σ</button>
       <button type="button" class="eq-tool" data-eq="\int_{a}^{b} f(x)\,dx">∫</button>
     </div>
-    <div class="eq-preview" id="eqPreview">Vista previa</div><div class="eq-status" id="eqStatus"></div>
+    <div class="eq-preview" id="eqPreview">Vista previa</div><div class="eq-status" id="eqStatus"></div><div id="eqLatexMirror" style="margin-top:8px;font-size:.72rem;color:#617589;word-break:break-all"></div>
     <div class="eq-note">La ecuación se guarda como LaTeX y luego se muestra correctamente en el juego. No se convierte a imagen.</div>
     <div class="eq-actions"><button type="button" class="eq-cancel" id="eqCancel">Cancelar</button><button type="button" class="eq-insert" id="eqInsert">Insertar ecuación</button></div>
   </div>
@@ -390,7 +390,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
     function compressImage(file){return new Promise((resolve,reject)=>{if(!file)return resolve('');const reader=new FileReader();reader.onerror=reject;reader.onload=()=>{const image=new Image();image.onload=()=>{const limit=720,ratio=Math.min(1,limit/Math.max(image.width,image.height)),canvas=document.createElement('canvas');canvas.width=Math.round(image.width*ratio);canvas.height=Math.round(image.height*ratio);canvas.getContext('2d').drawImage(image,0,0,canvas.width,canvas.height);resolve(canvas.toDataURL('image/jpeg',.72))};image.onerror=reject;image.src=reader.result};reader.readAsDataURL(file)})}
     let equationTarget=null;
     let equationRange=null;
-    const eqModal=document.getElementById('eqModal'),eqField=document.getElementById('eqField'),eqPreview=document.getElementById('eqPreview'),eqStatus=document.getElementById('eqStatus'),eqCancel=document.getElementById('eqCancel'),eqInsert=document.getElementById('eqInsert');
+    const eqModal=document.getElementById('eqModal'),eqField=document.getElementById('eqField'),eqPreview=document.getElementById('eqPreview'),eqStatus=document.getElementById('eqStatus'),eqCancel=document.getElementById('eqCancel'),eqInsert=document.getElementById('eqInsert'),eqLatexMirror=document.getElementById('eqLatexMirror');
     function getFirstMathRange(value){
       const text=String(value||'');
       const m=text.match(/\\\((.*?)\\\)/s);
@@ -416,6 +416,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       if(window.MathJax&&MathJax.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){}
       eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">Escribe una ecuación…</span>';
       if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});
+      if(eqLatexMirror) eqLatexMirror.textContent=latex?'Código matemático: '+latex:'';
       if(eqStatus){
         let errors=[];
         try{errors=eqField?.errors||[]}catch(e){}
@@ -423,10 +424,14 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
         eqStatus.textContent=errors.length?'Revisa la expresión antes de insertarla.':'✓ Ecuación válida';
       }
     }
-    function waitForMathLive(){
-      if(window.customElements?.get('math-field')) return Promise.resolve();
-      if(window.customElements?.whenDefined) return customElements.whenDefined('math-field');
-      return Promise.resolve();
+    const eqFallback=document.getElementById('eqFallback');
+    eqFallback?.addEventListener('input',()=>{ setEditorValue(eqFallback.value); updateEquationPreview(); });
+    async function waitForMathLive(){
+      try{
+        if(window.customElements?.get('math-field')) return true;
+        if(window.customElements?.whenDefined){ await customElements.whenDefined('math-field'); return !!window.customElements.get('math-field'); }
+      }catch(e){}
+      return false;
     }
     async function openEquationEditor(input){
       equationTarget=input;
@@ -434,8 +439,10 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       eqModal.classList.add('open');
       eqModal.setAttribute('aria-hidden','false');
       eqStatus.textContent='Cargando editor…';
-      await waitForMathLive();
+      const mathReady=await waitForMathLive();
       setEditorValue(equationRange?equationRange.latex:'');
+      if(eqFallback){ eqFallback.value=equationRange?equationRange.latex:''; eqFallback.style.display=mathReady?'none':'block'; }
+      if(!mathReady && eqStatus) eqStatus.textContent='Editor visual no cargó; se activó el editor de respaldo.';
       updateEquationPreview();
       setTimeout(()=>{try{eqField.focus();eqField.position=eqField.lastOffset}catch(e){}},60);
     }
@@ -458,32 +465,39 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
     }
     eqField.addEventListener('input',updateEquationPreview);
     async function insertToolbarLatex(latex){
-      await waitForMathLive();
       const fragment=String(latex||'').trim();
-      if(!fragment)return;
-      try{eqField.focus();}catch(e){}
-      const before=getEquationValue();
-      let changed=false;
+      if(!fragment) return;
+      await waitForMathLive();
+      try{ eqField.focus(); }catch(e){}
+      let before='';
+      try{ before=String(eqField.getValue('latex')||''); }catch(e){ before=String(eqField.value||''); }
+      let ok=false;
+      // API oficial de MathLive: insert() inserta LaTeX en el punto de edición.
       try{
-        if(typeof eqField.executeCommand==='function'){
-          changed=!!eqField.executeCommand(['insert',fragment,{selectionMode:'placeholder'}]);
+        if(typeof eqField.insert==='function'){
+          ok=eqField.insert(fragment,{selectionMode:'placeholder'});
         }
-      }catch(e){}
-      const after=getEquationValue();
-      changed=changed && after!==before;
-      if(!changed){
+      }catch(e){ console.warn('MathLive insert()',e); }
+      let after='';
+      try{ after=String(eqField.getValue('latex')||''); }catch(e){ after=String(eqField.value||''); }
+      // Segundo intento usando executeCommand(), también soportado oficialmente.
+      if(!ok || after===before){
         try{
-          if(typeof eqField.insert==='function'){
-            eqField.insert(fragment,{focus:true,selectionMode:'placeholder',insertionMode:'insertAfter'});
+          if(typeof eqField.executeCommand==='function'){
+            ok=eqField.executeCommand(['insert',fragment,{selectionMode:'placeholder'}]);
           }
-        }catch(e){}
+        }catch(e){ console.warn('MathLive executeCommand()',e); }
       }
-      const afterInsert=getEquationValue();
-      if(afterInsert===before){
-        // Fallback robusto: incluso si MathLive no expone el comando, la ecuación se escribe.
-        setEditorValue(before+fragment);
+      // Último respaldo: reemplazar el valor completo del math-field.
+      let finalValue='';
+      try{ finalValue=String(eqField.getValue('latex')||''); }catch(e){ finalValue=String(eqField.value||''); }
+      if(finalValue===before){
+        try{
+          if(typeof eqField.setValue==='function') eqField.setValue(before+fragment);
+          else eqField.value=before+fragment;
+        }catch(e){ eqField.value=before+fragment; }
       }
-      try{eqField.focus();eqField.position=eqField.lastOffset}catch(e){}
+      try{ eqField.focus(); }catch(e){}
       updateEquationPreview();
     }
     document.querySelectorAll('[data-eq]').forEach(btn=>{
