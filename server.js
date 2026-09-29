@@ -3,7 +3,6 @@ const fs=require('fs');
 const http=require('http');
 const express=require('express');
 const {Server}=require('socket.io');
-const {Pool}=require('pg');
 
 const app=express();
 const server=http.createServer(app);
@@ -11,9 +10,10 @@ const io=new Server(server);
 const PORT=process.env.PORT||3000;
 const ADMIN_PASSWORD='1234';
 const DATA_FILE=path.join(__dirname,'data','questions.json');
+const DATABASE_URL=process.env.DATABASE_URL||process.env.POSTGRES_URL||'';
+let dbPool=null;
 
 app.use(express.static(path.join(__dirname,'public')));
-app.get('/healthz',(req,res)=>res.json({ok:true,persistence:!!pool,questionsUpdatedAt:pool?'postgres':'local'}));
 
 const route=[[6,1],[6,3],[6,5],[4,6],[2,6],[0,6],[0,8],[1,8],[3,8],[5,8],[6,10],[6,12],[6,14],[8,14],[8,13],[8,11],[8,9],[10,8],[12,8],[14,8],[14,6],[13,6],[11,6],[9,6],[8,4],[8,2],[8,0],[6,0]];
 const starts=[0,7,14,21];
@@ -26,22 +26,29 @@ const cfg=[
 
 function loadQuestions(){try{return JSON.parse(fs.readFileSync(DATA_FILE,'utf8'));}catch{return {questionMapVersion:2,customCellQuestions:{},skillQuestions:[]};}}
 let questions=loadQuestions();
-const pool=process.env.DATABASE_URL?new Pool({connectionString:process.env.DATABASE_URL,max:5,idleTimeoutMillis:30000,connectionTimeoutMillis:5000}):null;
 
 async function initPersistence(){
-  if(!pool){console.log('DATABASE_URL no configurada: usando archivo local como respaldo.');return;}
+  if(!DATABASE_URL){
+    console.log('DATABASE_URL no configurada. Se usará data/questions.json durante esta ejecución.');
+    return;
+  }
   try{
-    await pool.query(`CREATE TABLE IF NOT EXISTS ludo_questions (id INTEGER PRIMARY KEY, payload JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`);
-    const r=await pool.query('SELECT payload FROM ludo_questions WHERE id=1');
-    if(r.rows.length===0){
-      await pool.query('INSERT INTO ludo_questions(id,payload) VALUES(1,$1::jsonb)',[JSON.stringify(questions)]);
-      console.log('Base de datos inicializada con questions.json.');
-    }else{
-      questions=r.rows[0].payload;
+    const {Pool}=require('pg');
+    dbPool=new Pool({connectionString:DATABASE_URL,max:5});
+    await dbPool.query(`CREATE TABLE IF NOT EXISTS ludo_questions (id INTEGER PRIMARY KEY, data JSONB NOT NULL, updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW())`);
+    const result=await dbPool.query('SELECT data FROM ludo_questions WHERE id=1');
+    if(result.rows.length){
+      questions=result.rows[0].data;
+      fs.mkdirSync(path.dirname(DATA_FILE),{recursive:true});
+      fs.writeFileSync(DATA_FILE,JSON.stringify(questions,null,2),'utf8');
       console.log('Preguntas cargadas desde PostgreSQL.');
+    }else{
+      await dbPool.query('INSERT INTO ludo_questions(id,data) VALUES(1,$1::jsonb) ON CONFLICT(id) DO NOTHING',[JSON.stringify(questions)]);
+      console.log('Preguntas iniciales copiadas a PostgreSQL.');
     }
-  }catch(err){
-    console.error('No se pudo inicializar PostgreSQL; se mantiene el respaldo local:',err.message);
+  }catch(error){
+    dbPool=null;
+    console.error('No se pudo conectar a PostgreSQL. Se usará el archivo local:',error.message);
   }
 }
 
@@ -49,26 +56,18 @@ async function saveQuestions(q){
   questions=q;
   fs.mkdirSync(path.dirname(DATA_FILE),{recursive:true});
   fs.writeFileSync(DATA_FILE,JSON.stringify(q,null,2),'utf8');
-  if(pool){
-    try{
-      await pool.query(`INSERT INTO ludo_questions(id,payload,updated_at) VALUES(1,$1::jsonb,NOW()) ON CONFLICT(id) DO UPDATE SET payload=EXCLUDED.payload,updated_at=NOW()`,[JSON.stringify(q)]);
-      return true;
-    }catch(err){
-      console.error('Error guardando en PostgreSQL:',err.message);
-      return false;
-    }
+  if(dbPool){
+    await dbPool.query(`INSERT INTO ludo_questions(id,data,updated_at) VALUES(1,$1::jsonb,NOW()) ON CONFLICT(id) DO UPDATE SET data=EXCLUDED.data,updated_at=NOW()`,[JSON.stringify(q)]);
   }
-  return false;
 }
 function cleanQuestions(q){
   if(!q||typeof q!=='object')return null;
   const out={questionMapVersion:2,customCellQuestions:{},skillQuestions:Array.isArray(q.skillQuestions)?q.skillQuestions.slice(0,4):[]};
   const src=q.customCellQuestions||{};
   for(const [k,v] of Object.entries(src)){
-    if(!Array.isArray(v)||!v[0])continue;
-    const item=v[0];
-    if(typeof item.q!=='string'||!Array.isArray(item.a)||item.a.length!==4)continue;
-    out.customCellQuestions[k]=[{q:item.q.slice(0,1000),a:item.a.slice(0,4).map(x=>String(x).slice(0,300)),ok:Math.max(0,Math.min(3,Number(item.ok)||0)),image:typeof item.image==='string'?item.image:''}];
+    if(!Array.isArray(v))continue;
+    const cleanedBank=v.filter(item=>item&&typeof item.q==='string'&&Array.isArray(item.a)&&item.a.length===4).slice(0,4).map(item=>({q:item.q.slice(0,1000),a:item.a.slice(0,4).map(x=>String(x).slice(0,300)),ok:Math.max(0,Math.min(3,Number(item.ok)||0)),image:typeof item.image==='string'?item.image:''}));
+    if(cleanedBank.length)out.customCellQuestions[k]=cleanedBank;
   }
   return out;
 }
@@ -111,7 +110,7 @@ function startRoom(room){room.started=true;room.current=0;room.value=null;room.a
 
 io.on('connection',socket=>{
   socket.on('adminLogin',({password}={})=>{if(String(password)===ADMIN_PASSWORD){socket.admin=true;socket.emit('adminLoginResult',{ok:true,questions});}else socket.emit('adminLoginResult',{ok:false,message:'Contraseña incorrecta.'});});
-  socket.on('adminSaveQuestions',async ({questions:q}={})=>{if(!socket.admin)return socket.emit('errorMessage','No tienes permisos de administrador.');const cleaned=cleanQuestions(q);if(!cleaned)return socket.emit('errorMessage','Preguntas inválidas.');const persisted=await saveQuestions(cleaned);io.emit('questionsUpdated',{questions:cleaned});socket.emit('adminSaveResult',{ok:true,persistent:persisted,message:persisted?'Guardado online en la base de datos.':'Guardado en el servidor (sin base de datos).'});});
+  socket.on('adminSaveQuestions',async({questions:q}={})=>{if(!socket.admin)return socket.emit('errorMessage','No tienes permisos de administrador.');const cleaned=cleanQuestions(q);if(!cleaned)return socket.emit('errorMessage','Preguntas inválidas.');try{await saveQuestions(cleaned);for(const room of rooms.values())room.questions=JSON.parse(JSON.stringify(cleaned));io.emit('questionsUpdated',{questions:cleaned});socket.emit('message','Preguntas guardadas online.');}catch(error){console.error(error);socket.emit('errorMessage','No se pudieron guardar las preguntas online.');}});
   socket.on('createRoom',({playerCount=2,name}={})=>{const count=Math.max(2,Math.min(4,Number(playerCount)||2));const cleanName=String(name||'Jugador').trim().slice(0,24);const code=makeCode();const room={code,playerCount:count,host:socket.id,players:new Map(),playersByTeam:{},started:false,current:0,value:null,awaitingMove:false,winner:null,message:'Esperando jugadores.',tokens:[],pending:null,questions:JSON.parse(JSON.stringify(questions))};rooms.set(code,room);room.players.set(socket.id,{id:socket.id,name:cleanName,team:0});room.playersByTeam[0]=room.players.get(socket.id);socket.join(code);socket.roomCode=code;socket.team=0;socket.emit('roomCreated',{code,team:0,playerCount:count,name:cleanName});broadcastRoom(room);});
   socket.on('joinRoom',({code,name}={})=>{const room=rooms.get(String(code||'').toUpperCase());if(!room)return socket.emit('errorMessage','La sala no existe.');if(room.started)return socket.emit('errorMessage','La partida ya comenzó.');if(room.players.size>=room.playerCount)return socket.emit('errorMessage','La sala está completa.');const cleanName=String(name||'Jugador').trim().slice(0,24);if([...room.players.values()].some(p=>p.name.toLowerCase()===cleanName.toLowerCase()))return socket.emit('errorMessage','Ese nombre ya está en uso.');let team=0;while(room.playersByTeam[team])team++;room.players.set(socket.id,{id:socket.id,name:cleanName,team});room.playersByTeam[team]=room.players.get(socket.id);socket.join(room.code);socket.roomCode=room.code;socket.team=team;socket.emit('joinedRoom',{code:room.code,team,playerCount:room.playerCount,name:cleanName});broadcastRoom(room);});
   socket.on('startGame',()=>{const room=rooms.get(socket.roomCode);if(!room||room.host!==socket.id)return;if(room.players.size!==room.playerCount)return socket.emit('errorMessage','Faltan jugadores.');startRoom(room);});
@@ -131,4 +130,4 @@ io.on('connection',socket=>{
   socket.on('disconnect',()=>{const code=socket.roomCode;if(!code)return;const room=rooms.get(code);if(!room)return;room.players.delete(socket.id);delete room.playersByTeam[socket.team];if(room.host===socket.id){const next=room.players.values().next().value;if(next){room.host=next.id;}}if(room.players.size===0){rooms.delete(code);return;}io.to(code).emit('roomInfo',roomInfo(room));});
 });
 
-initPersistence().then(()=>server.listen(PORT,()=>console.log(`Ludo San Pío X online en puerto ${PORT}`))).catch(err=>{console.error(err);server.listen(PORT,()=>console.log(`Ludo San Pío X online en puerto ${PORT} (sin persistencia)`));});
+initPersistence().finally(()=>server.listen(PORT,()=>console.log(`Ludo San Pío X online en puerto ${PORT}`)));
