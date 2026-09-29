@@ -16,3 +16,7 @@ Las expresiones matemáticas se muestran con notación matemática renderizada.
 npm install
 npm start
 ```
+
+
+## Administrador
+El administrador está protegido por contraseña. Contraseña inicial: `1234`. Las preguntas se pueden editar desde el navegador; el editor matemático usa formato visual y guarda las fórmulas en LaTeX para renderizarlas con MathJax.
