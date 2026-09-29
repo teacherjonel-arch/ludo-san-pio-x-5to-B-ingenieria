@@ -1,10 +1,7 @@
 services:
   - type: web
-    name: ludo-san-pio-x-5to-b
-    runtime: node
-    plan: free
+    name: ludo-san-pio-x-5to-b-ingenieria
+    env: node
     buildCommand: npm install
     startCommand: npm start
-    envVars:
-      - key: ADMIN_PASSWORD
-        sync: false
+    autoDeploy: true
