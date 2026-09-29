@@ -188,7 +188,7 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
 
 <script>window.MathJax={tex:{inlineMath:[["\\(","\\)"]],displayMath:[["\\[","\\]"]]},svg:{fontCache:"global"}};</script>
 <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
-<script defer src="https://unpkg.com/mathlive@0.110.0/dist/mathlive.min.js"></script>
+<script src="https://unpkg.com/mathlive@0.110.0/dist/mathlive.min.js"></script>
 </head>
 <body>
 <div class="admin-login-overlay" id="adminLoginOverlay" hidden style="display:none">
@@ -397,64 +397,89 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       if(!m)return null;
       return {start:m.index,end:m.index+m[0].length,latex:m[1]};
     }
+    function getEquationValue(){
+      try{
+        if(eqField && typeof eqField.getValue==='function') return String(eqField.getValue('latex')||'');
+      }catch(e){}
+      return String(eqField?.value||'');
+    }
     function setEditorValue(latex){
       const clean=String(latex||'').trim();
-      try{eqField.setValue(clean,{suppressChangeNotifications:true});}
-      catch(e){eqField.value=clean;}
+      try{
+        if(eqField && typeof eqField.setValue==='function') eqField.setValue(clean,{suppressChangeNotifications:true});
+        else if(eqField) eqField.value=clean;
+      }catch(e){ if(eqField) eqField.value=clean; }
     }
     function updateEquationPreview(){
       if(!eqPreview)return;
-      const latex=String(eqField?.value||'').trim();
+      const latex=getEquationValue().trim();
       if(window.MathJax&&MathJax.typesetClear)try{MathJax.typesetClear([eqPreview])}catch(e){}
       eqPreview.innerHTML=latex?`\\[${latex}\\]`:'<span style="color:#8b9aa7">Escribe una ecuación…</span>';
       if(latex&&window.MathJax?.typesetPromise)MathJax.typesetPromise([eqPreview]).catch(()=>{});
       if(eqStatus){
         let errors=[];
-        try{errors=typeof eqField.errors==='function'?eqField.errors():eqField.errors||[]}catch(e){}
+        try{errors=eqField?.errors||[]}catch(e){}
         eqStatus.className='eq-status '+(errors.length?'bad':'ok');
         eqStatus.textContent=errors.length?'Revisa la expresión antes de insertarla.':'✓ Ecuación válida';
       }
     }
-    function openEquationEditor(input){
+    function waitForMathLive(){
+      if(window.customElements?.get('math-field')) return Promise.resolve();
+      if(window.customElements?.whenDefined) return customElements.whenDefined('math-field');
+      return Promise.resolve();
+    }
+    async function openEquationEditor(input){
       equationTarget=input;
       equationRange=getFirstMathRange(input?.value||'');
       eqModal.classList.add('open');
       eqModal.setAttribute('aria-hidden','false');
+      eqStatus.textContent='Cargando editor…';
+      await waitForMathLive();
       setEditorValue(equationRange?equationRange.latex:'');
       updateEquationPreview();
-      setTimeout(()=>{eqField.focus();try{eqField.position=eqField.lastOffset}catch(e){}},60);
+      setTimeout(()=>{try{eqField.focus();eqField.position=eqField.lastOffset}catch(e){}},60);
     }
     function closeEquationEditor(){eqModal.classList.remove('open');eqModal.setAttribute('aria-hidden','true');equationTarget=null;equationRange=null}
     function insertEquationIntoTarget(input,latex){
-      const value=String(input?.value||'');
-      const wrapped=`\\(${latex}\\)`;
+      const clean=String(latex||'').trim();
+      if(!input||!clean)return false;
+      const value=String(input.value||'');
+      const wrapped=`\\(${clean}\\)`;
       let next;
       if(equationRange && equationRange.start>=0){
         next=value.slice(0,equationRange.start)+wrapped+value.slice(equationRange.end);
       }else{
-        const sep=value.trim()?' ':' ';
-        next=value.trim()+sep+wrapped;
+        next=value.trim()?value.trim()+' '+wrapped:wrapped;
       }
       input.value=next.trim();
       input.dispatchEvent(new Event('input',{bubbles:true}));
       input.focus();
+      return true;
     }
     eqField.addEventListener('input',updateEquationPreview);
-    document.querySelectorAll('[data-eq]').forEach(btn=>btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-eq]').forEach(btn=>btn.addEventListener('click',async()=>{
+      await waitForMathLive();
       const latex=btn.dataset.eq||'';
-      try{eqField.insert(latex,{focus:true,selectionMode:'placeholder'})}
-      catch(e){try{eqField.setValue(String(eqField.value||'')+latex)}catch(_) {}}
+      try{
+        if(typeof eqField.insert==='function'){
+          eqField.focus();
+          eqField.insert(latex,{focus:true,selectionMode:'placeholder',insertionMode:'replaceSelection'});
+        }else{
+          setEditorValue(getEquationValue()+latex);
+        }
+      }catch(e){
+        setEditorValue(getEquationValue()+latex);
+      }
       updateEquationPreview();
     }));
     eqCancel.onclick=closeEquationEditor;
     eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
-    eqInsert.onclick=()=>{
-      const latex=String(eqField.value||'').trim();
-      if(!latex||!equationTarget)return;
-      insertEquationIntoTarget(equationTarget,latex);
-      closeEquationEditor();
+    eqInsert.onclick=async()=>{
+      await waitForMathLive();
+      const latex=getEquationValue().trim();
+      if(!latex||!equationTarget){eqStatus.textContent='Escribe una ecuación antes de insertar.';eqStatus.className='eq-status bad';return;}
+      if(insertEquationIntoTarget(equationTarget,latex)) closeEquationEditor();
     };
-
     function updateEditPreview(preview, value){
       if(!preview)return;
       if(window.MathJax && MathJax.typesetClear)try{MathJax.typesetClear([preview])}catch(e){}
