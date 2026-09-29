@@ -457,21 +457,38 @@ button:active:not(:disabled){transform:translateY(0) scale(.98)}
       return true;
     }
     eqField.addEventListener('input',updateEquationPreview);
-    document.querySelectorAll('[data-eq]').forEach(btn=>btn.addEventListener('click',async()=>{
+    async function insertToolbarLatex(latex){
       await waitForMathLive();
-      const latex=btn.dataset.eq||'';
+      const fragment=String(latex||'').trim();
+      if(!fragment)return;
+      try{eqField.focus();}catch(e){}
+      const before=getEquationValue();
+      let changed=false;
       try{
-        if(typeof eqField.insert==='function'){
-          eqField.focus();
-          eqField.insert(latex,{focus:true,selectionMode:'placeholder',insertionMode:'replaceSelection'});
-        }else{
-          setEditorValue(getEquationValue()+latex);
+        if(typeof eqField.executeCommand==='function'){
+          changed=!!eqField.executeCommand(['insert',fragment,{selectionMode:'placeholder'}]);
         }
-      }catch(e){
-        setEditorValue(getEquationValue()+latex);
+      }catch(e){}
+      const after=getEquationValue();
+      changed=changed && after!==before;
+      if(!changed){
+        try{
+          if(typeof eqField.insert==='function'){
+            eqField.insert(fragment,{focus:true,selectionMode:'placeholder',insertionMode:'insertAfter'});
+          }
+        }catch(e){}
       }
+      const afterInsert=getEquationValue();
+      if(afterInsert===before){
+        // Fallback robusto: incluso si MathLive no expone el comando, la ecuación se escribe.
+        setEditorValue(before+fragment);
+      }
+      try{eqField.focus();eqField.position=eqField.lastOffset}catch(e){}
       updateEquationPreview();
-    }));
+    }
+    document.querySelectorAll('[data-eq]').forEach(btn=>{
+      btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();insertToolbarLatex(btn.getAttribute('data-eq')||'')});
+    });
     eqCancel.onclick=closeEquationEditor;
     eqModal.addEventListener('click',e=>{if(e.target===eqModal)closeEquationEditor()});
     eqInsert.onclick=async()=>{

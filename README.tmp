@@ -25,7 +25,3 @@ El administrador está protegido por contraseña. Contraseña inicial: `1234`. L
 ## Edición online
 
 El administrador permite seleccionar Álgebra, Aritmética, Geometría, Trigonometría y Habilidad Matemática. Cada casilla muestra una vista previa en tiempo real de la pregunta y sus alternativas. El editor de ecuaciones permite insertar y modificar fórmulas visualmente y guardarlas como LaTeX para MathJax.
-
-
-## Editor de ecuaciones v8
-Los botones del editor usan MathLive executeCommand/insert con fallback a setValue para asegurar que herramientas como sin, cos, tan, fracciones, raíces y matrices se inserten incluso si el comando programático no devuelve un cambio.
