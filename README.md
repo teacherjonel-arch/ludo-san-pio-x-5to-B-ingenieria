@@ -20,3 +20,8 @@ npm start
 
 ## Administrador
 El administrador está protegido por contraseña. Contraseña inicial: `1234`. Las preguntas se pueden editar desde el navegador; el editor matemático usa formato visual y guarda las fórmulas en LaTeX para renderizarlas con MathJax.
+
+
+## Edición online
+
+El administrador permite seleccionar Álgebra, Aritmética, Geometría, Trigonometría y Habilidad Matemática. Cada casilla muestra una vista previa en tiempo real de la pregunta y sus alternativas. El editor de ecuaciones permite insertar y modificar fórmulas visualmente y guardarlas como LaTeX para MathJax.
